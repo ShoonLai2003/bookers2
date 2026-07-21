@@ -1,0 +1,71 @@
+<div class="container px-5 px-sm-0">
+
+    <% if @book.errors.any? %>
+
+      <h3>
+        <%= @book.errors.count %> errors prohibited this book from being saved:
+      </h3>
+
+      <ul>
+        <% @book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+
+    <% end %>
+  <div class="row">
+
+    <div class="col-md-3">
+      <%= render "users/info", user: Current.user, book: @book %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+
+      <h2>Books</h2>
+
+      <table class="table table-hover">
+
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <% @books.each do |book| %>
+
+            <tr>
+
+              <td>
+                <% if book.user.profile_image.attached? %>
+                  <%= link_to user_path(book.user) do %>
+                    <%= image_tag book.user.profile_image, size: "80x80" %>
+                  <% end %>
+                <% else %>
+                  <%= link_to "No Image", user_path(book.user) %>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to book.title, book_path(book) %>
+              </td>
+
+              <td>
+                <%= book.body %>
+              </td>
+
+            </tr>
+
+          <% end %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+</div>
